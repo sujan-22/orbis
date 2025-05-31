@@ -15,7 +15,7 @@ import Sidebar from "./sidebar";
 
 export const NAV_LINKS = [
     { href: "/", label: "Home" },
-    { href: "/about", label: "About" },
+    { href: "/about-us", label: "About" },
     {
         label: "Product",
         subLinks: [

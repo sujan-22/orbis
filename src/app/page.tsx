@@ -16,7 +16,6 @@ import {
     FaBoxes,
     FaLayerGroup,
     FaCogs,
-    FaCertificate,
     FaIndustry,
 } from "react-icons/fa";
 import { FaGear } from "react-icons/fa6";
@@ -77,12 +76,6 @@ const DETAIL_CARDS = [
         title: "Technologies & Machinery",
         description:
             "Harnessing state-of-the-art manufacturing and testing equipment, we craft versatile valves for petrochemical, power, food, and mining sectors.",
-    },
-    {
-        icon: FaCertificate,
-        title: "Certificates",
-        description:
-            "Our ISO 9001, 14001, and 25001 certifications, along with compliance to DIN, ASME, ASTM, ANSI, and NACE, attest to our unwavering dedication to excellence.",
     },
     {
         icon: FaCogs,

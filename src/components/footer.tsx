@@ -12,7 +12,7 @@ export default function Footer() {
             //     background:
             //         "linear-gradient(to right, white 20%, #003B73 100%)",
             // }}
-            className="text-primary pt-12 pb-6"
+            className="text-primary pt-12 pb-6 border-t border-[#004AAD]"
         >
             <MaxWidthWrapper>
                 <div className="mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
