@@ -15,7 +15,7 @@ export default function Footer() {
             className="text-primary pt-12 pb-6 border-t border-[#004AAD]"
         >
             <MaxWidthWrapper>
-                <div className="mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     {/* Logo & Description */}
                     <div className="space-y-4 lg:col-span-2">
                         <Link href="/">
@@ -98,8 +98,8 @@ export default function Footer() {
                 </div>
             </MaxWidthWrapper>
             <div className="mt-8 pt-6 border-t border-[#004AAD] text-center text-sm text-[#003B73]">
-                © {new Date().getFullYear()} Orbis Valves Industries. All rights
-                reserved.
+                © {new Date().getFullYear()} Orbis Valves Industries. All
+                rights reserved.
             </div>
         </footer>
     );
