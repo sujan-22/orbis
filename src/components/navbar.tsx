@@ -60,7 +60,7 @@ const Navbar = () => {
                                     <Image
                                         src="/logo.svg"
                                         alt="Orbis Valves Industries Logo"
-                                        width={180}
+                                        width={170}
                                         height={50}
                                         className="bg-transparent"
                                     />

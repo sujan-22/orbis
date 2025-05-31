@@ -96,13 +96,13 @@ const PRODUCT_LIST = [
         name: "Gate Valve",
         description:
             "Gate valves provide straight-through flow with minimal pressure drop. Designed primarily for on/off control, they offer tight sealing when fully closed but are not ideal for throttling. Common in water, oil, and gas pipelines, they ensure reliable isolation in high-pressure systems.",
-        initialImage: "/assets/products/gate-valve.jpg",
+        initialImage: "/assets/products/gate-valve.png",
     },
     {
         name: "Globe Valve",
         description:
             "Globe valves employ a port-closure mechanism with a stem-mounted disc regulating flow through a defined opening. Excelling in throttling applications, they deliver precise flow control and durability under frequent operation, making them ideal for applications requiring exact regulation and maintenance ease.",
-        initialImage: "/assets/products/globe-valve.jpg",
+        initialImage: "/assets/products/globe-valve.png",
     },
     {
         name: "Ball Valve (2PC)",
