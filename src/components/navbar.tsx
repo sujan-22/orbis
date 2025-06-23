@@ -20,19 +20,31 @@ export const NAV_LINKS = [
         label: "Product",
         subLinks: [
             { href: "/products/gate-valve", label: "Gate Valve" },
-            { href: "/products/globe-valve", label: "Globe Valve" },
-            { href: "/products/ball-valve-2pc", label: "Ball Valve (2PC)" },
+            {
+                href: "/products/globe-valve-flange-ends",
+                label: "Globe Valve Flange Ends",
+            },
+            { href: "/products/2pc-ball-valve", label: "2PC Ball Valve" },
             {
                 href: "/products/dual-plate-check-valve",
                 label: "Dual Plate Check Valve",
             },
-            { href: "/products/wafer-check-valve", label: "Wafer Check Valve" },
+            {
+                href: "/products/wafer-type-check-valve",
+                label: "Wafer Type Check Valve",
+            },
             {
                 href: "/products/lever-operated-butterfly-valve",
                 label: "Lever Operated Butterfly Valve",
             },
-            { href: "/products/knife-gate-valve", label: "Knife Gate Valve" },
-            { href: "/products/check-valve", label: "Check Valve" }, // optional, if separate from the above
+            {
+                href: "/products/gear-operated-butterfly-valve",
+                label: "Gear Operated Butterfly Valve",
+            },
+            {
+                href: "/products/knife-edge-gate-valve",
+                label: "Knife Edge Gate Valve",
+            },
         ],
     },
     { href: "/catalogue", label: "Catalogue" },
