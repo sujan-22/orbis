@@ -49,8 +49,8 @@ export default async function ProductPage({ params }: PageProps) {
                 </Button>
             </a>
             {materials.length > 0 && (
-                <div className="mt-4">
-                    <h3 className="text-2xl font-semibold mt-12 text-[#003B73]">
+                <div className="mt-10">
+                    <h3 className="text-2xl font-semibold text-[#003B73]">
                         Material Specifications
                     </h3>
                     <ProductMaterialTable rows={materials} />

@@ -23,6 +23,7 @@ import MaxWidthWrapper from "@/components/max-width-wrapper";
 import Product from "@/components/helpers/product-card";
 import { Button } from "@/components/ui/button";
 import Autoplay from "embla-carousel-autoplay";
+import Link from "next/link";
 
 const SLIDES = [
     {
@@ -228,9 +229,11 @@ export default function Home() {
                         ))}
                     </div>
                     <div className="mt-10 flex justify-end">
-                        <Button className="bg-[#003B73] text-white">
-                            View More
-                        </Button>
+                        <Link href={"products/gate-valve"}>
+                            <Button className="bg-[#003B73] cursor-pointer text-white">
+                                View More
+                            </Button>
+                        </Link>
                     </div>
                 </section>
                 {/* Applications Section */}

@@ -15,7 +15,7 @@ interface Props {
 }
 
 export const ProductMaterialTable: React.FC<Props> = ({ rows }) => (
-    <Table className="mt-8">
+    <Table className="mt-1">
         <TableHeader>
             <TableRow className="bg-[#0078A6]/20">
                 <TableHead className="w-12">#</TableHead>
