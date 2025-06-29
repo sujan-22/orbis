@@ -12,7 +12,7 @@ export default function Footer() {
             //     background:
             //         "linear-gradient(to right, white 20%, #003B73 100%)",
             // }}
-            className="text-primary pt-12 pb-6 border-t border-[#004AAD]"
+            className="text-primary pt-12 pb-2 border-t border-[#004AAD] relative z-10"
         >
             <MaxWidthWrapper>
                 <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -101,6 +101,17 @@ export default function Footer() {
                 © {new Date().getFullYear()} Orbis Valves Industries. All
                 rights reserved.
             </div>
+            {/* <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 90 1440 320"
+                className="absolute bottom-1 left-1 right-1 z-0"
+            >
+                <path
+                    fill="#003B73"
+                    fillOpacity="1"
+                    d="M0,256L60,261.3C120,267,240,277,360,245.3C480,213,600,139,720,96C840,53,960,43,1080,69.3C1200,96,1320,160,1380,192L1440,224L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"
+                ></path>
+            </svg> */}
         </footer>
     );
 }

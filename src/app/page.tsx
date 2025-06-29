@@ -24,17 +24,29 @@ import Product from "@/components/helpers/product-card";
 import { Button } from "@/components/ui/button";
 import Autoplay from "embla-carousel-autoplay";
 import Link from "next/link";
+import SectionHeading from "@/components/helpers/section-heading";
+import { PRODUCTS } from "@/lib/products";
+
+// #003B73
+// #004AAD
+// #5DE0E6
+// #0078A6
 
 const SLIDES = [
     {
-        image: "/assets/hero_1.jpg",
+        image: "/assets/home1.jpg",
         title: "Orbis Valves Industries",
-        quote: "Engineered for enduring reliability and unrivaled efficiency",
+        quote: "Precision engineered for peak performance under pressure",
     },
     {
-        image: "/assets/hero_2.jpg",
+        image: "/assets/home2.jpg",
         title: "Orbis Valves Industries",
-        quote: "Precision flow control, powering your operations seamlessly",
+        quote: "Delivering leak‑proof reliability across every application",
+    },
+    {
+        image: "/assets/home3.jpg",
+        title: "Orbis Valves Industries",
+        quote: "Your flow control partner—durable, dependable, dynamic",
     },
 ];
 
@@ -92,27 +104,6 @@ const DETAIL_CARDS = [
     },
 ];
 
-const PRODUCT_LIST = [
-    {
-        name: "Gate Valve",
-        description:
-            "Gate valves provide straight-through flow with minimal pressure drop. Designed primarily for on/off control, they offer tight sealing when fully closed but are not ideal for throttling. Common in water, oil, and gas pipelines, they ensure reliable isolation in high-pressure systems.",
-        initialImage: "/assets/products/gate-valve.png",
-    },
-    {
-        name: "Globe Valve",
-        description:
-            "Globe valves employ a port-closure mechanism with a stem-mounted disc regulating flow through a defined opening. Excelling in throttling applications, they deliver precise flow control and durability under frequent operation, making them ideal for applications requiring exact regulation and maintenance ease.",
-        initialImage: "/assets/products/globe-valve.png",
-    },
-    {
-        name: "Ball Valve (2PC)",
-        description:
-            "2PC ball valves feature a rotating ball with a bore that provides tight shut-off and low torque operation. Their compact design and simple quarter-turn action offer rapid opening and closing, ideal for on/off control in chemical, petrochemical, and general industrial services.",
-        initialImage: "/assets/products/ball-valve-2pc.jpg",
-    },
-];
-
 const APPLICATION_IMAGES = [
     {
         name: "Nuclear Power Plant",
@@ -157,6 +148,8 @@ export default function Home() {
                                 fill
                                 className="object-cover object-center"
                                 priority={index === 0}
+                                quality={100}
+                                draggable={false}
                             />
                             <div className="absolute inset-0 bg-black/40" />
 
@@ -181,51 +174,63 @@ export default function Home() {
             <MaxWidthWrapper>
                 {/* Why Choose Orbis Valves Section */}
                 <section className="py-20">
-                    <h2 className="text-3xl md:text-4xl font-bold text-center text-[#003B73] mb-12">
-                        Why Choose Orbis Valves?
-                    </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <SectionHeading title="Why Choose Orbis Valves?" />
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
                         {FEATURE_CARDS.map((card) => (
                             <InfoCard
                                 key={card.title}
                                 icon={card.icon}
                                 title={card.title}
                                 description={card.description}
+                                color={{
+                                    text: "text-[#003B73]",
+                                    background: "bg-white",
+                                }}
+                                transparent={true}
                             />
                         ))}
                     </div>
                 </section>
-                {/* Capabilities & Details Section */}
+
+                {/* Our Capabilities Section */}
                 <section className="py-20">
-                    <h2 className="text-3xl md:text-4xl font-bold text-center text-[#003B73] mb-12">
-                        Our Capabilities
-                    </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-8">
+                    <SectionHeading title="Our Capabilities" />
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {DETAIL_CARDS.map((card) => (
                             <InfoCard
                                 key={card.title}
                                 icon={card.icon}
                                 title={card.title}
                                 description={card.description}
+                                color={{
+                                    text: "text-[#5DE0E6]",
+                                    background: "bg-[#003B73]",
+                                    descriptionColor: "text-white",
+                                }}
                             />
                         ))}
                     </div>
                 </section>
+
                 {/* Featured Products Section */}
                 <section className="py-20">
-                    <h2 className="text-3xl md:text-4xl font-bold text-center text-[#003B73] mb-12">
-                        Featured Products
-                    </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-8">
-                        {PRODUCT_LIST.map((prod) => (
-                            <Product
-                                size="square"
-                                isFeatured={true}
+                    <SectionHeading title="Featured Products" />
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        {PRODUCTS.slice(0, 3).map((prod) => (
+                            <Link
+                                href={`/products/${prod.slug}`}
                                 key={prod.name}
-                                initialImage={prod.initialImage}
-                                name={prod.name}
-                                description={prod.description}
-                            />
+                            >
+                                <Product
+                                    size="square"
+                                    isFeatured={true}
+                                    key={prod.name}
+                                    initialImage={prod.image}
+                                    name={prod.name}
+                                    description={prod.description}
+                                    slug={prod.slug}
+                                />
+                            </Link>
                         ))}
                     </div>
                     <div className="mt-10 flex justify-end">
@@ -236,11 +241,10 @@ export default function Home() {
                         </Link>
                     </div>
                 </section>
+
                 {/* Applications Section */}
-                <div className="max-w-full overflow-hidden mt-4 py-20">
-                    <h2 className="text-3xl md:text-4xl font-bold text-center text-[#003B73] mb-12">
-                        Industries We Serve
-                    </h2>
+                <section className="py-20">
+                    <SectionHeading title="Industries We Serve" />
                     <Carousel
                         opts={{ align: "center", loop: true }}
                         plugins={[
@@ -259,11 +263,9 @@ export default function Home() {
                                             src={application.image}
                                             alt={application.name}
                                             className="w-full h-full object-cover rounded-md"
-                                            style={{
-                                                aspectRatio: "1 / 1",
-                                            }}
+                                            style={{ aspectRatio: "1 / 1" }}
                                         />
-                                        <p className="text-lg font-semibold text-[#003B73] text-center">
+                                        <p className="text-lg font-semibold text-[#003B73] text-center mt-2">
                                             {application.name}
                                         </p>
                                     </div>
@@ -274,7 +276,7 @@ export default function Home() {
                         <CarouselPrevious className="absolute left-2 top-1/2 transform -translate-y-1/2 z-10" />
                         <CarouselNext className="absolute right-2 top-1/2 transform -translate-y-1/2 z-10" />
                     </Carousel>
-                </div>{" "}
+                </section>
             </MaxWidthWrapper>
         </div>
     );

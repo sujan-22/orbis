@@ -28,7 +28,7 @@ export const PRODUCTS: Product[] = [
         name: "2PC Ball Valve",
         description:
             '"ORBIS" make 2PC Ball Valves use a hollow, perforated, pivoting ball for quick quarter-turn operation. The valve is open when the ball’s bore aligns with the flow, and fully closed when rotated 90°. Ideal for rapid on/off control in chemical and industrial services. (150# / 300#)',
-        image: "/assets/products/ball-valve-2pc.jpg",
+        image: "/assets/products/2pc-ball-valve.png",
         additionalInfo: "150# / 300#",
     },
     {
@@ -36,34 +36,34 @@ export const PRODUCTS: Product[] = [
         name: "Dual Plate Check Valve",
         description:
             '"ORBIS" make Dual Plate Check Valves featuring two spring-loaded plates that open under forward flow and snap shut to prevent backflow. Compact, wafer-style design fits between flanges for space-saving installations. (150# / 300#)',
-        image: "/assets/products/dual-plate-check-valve.jpg",
+        image: "/assets/products/dual-plate-check-valve.png",
     },
     {
         slug: "wafer-type-check-valve",
         name: "Wafer Type Check Valve",
         description:
             '"ORBIS" make Wafer Type Check Valves as single-plate swing valves with a short wafer body. The low-profile disc design requires minimal differential pressure to open and close, preventing backflow in piping systems. (150# / 300#)',
-        image: "/assets/products/wafer-type-check-valve.jpg",
+        image: "/assets/products/wafer-type-check-valve.png",
     },
     {
         slug: "lever-operated-butterfly-valve",
         name: "Lever Operated Butterfly Valve",
         description:
             '"ORBIS" make Lever Operated Butterfly Valves for quick quarter-turn shutoff, regulation, and isolation of fluid, gas, or air flow. The lever mechanism enables easy manual operation in low-pressure networks. (150# / 300#)',
-        image: "/assets/products/lever-operated-butterfly-valve.jpg",
+        image: "/assets/products/lever-butterfly-valve.png",
     },
     {
         slug: "gear-operated-butterfly-valve",
         name: "Gear Operated Butterfly Valve",
         description:
             '"ORBIS" make Gear Operated Butterfly Valves for applications requiring higher torque. The gearbox drive allows precise, smooth operation of the disc, offering reliable isolation and throttling in larger-diameter pipelines. (150# / 300#)',
-        image: "/assets/products/gear-operated-butterfly-valve.jpg",
+        image: "/assets/products/gear-butterfly-valve.png",
     },
     {
         slug: "knife-edge-gate-valve",
         name: "Knife Edge Gate Valve",
         description:
             '"ORBIS" make Knife Edge Gate Valves with sharp, blade-like gates that cut through slurries and viscous fluids. Ideal for heavy oils, greases, pulp, varnish, and wastewater applications, offering clean closure in demanding environments. (150# / 300#)',
-        image: "/assets/products/knife-edge-gate-valve.jpg",
+        image: "/assets/products/knife-edge-gate-valve.png",
     },
 ];

@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import { Button } from "../ui/button";
+import Link from "next/link";
 
 interface ProductProps {
     size: "small" | "medium" | "large" | "full" | "square";
@@ -9,6 +9,7 @@ interface ProductProps {
     className?: string;
     name: string;
     description: string;
+    slug: string;
 }
 
 interface ImageOrPlaceholderProps {
@@ -23,6 +24,7 @@ const Product: React.FC<ProductProps> = ({
     className,
     name,
     description,
+    slug,
 }) => {
     return (
         <div className={cn("flex flex-col w-full", className)}>
@@ -53,12 +55,12 @@ const Product: React.FC<ProductProps> = ({
                 <p className="mt-1 text-md text-[#004AAD] overflow-hidden text-ellipsis line-clamp-3">
                     {description}
                 </p>
-                <Button
-                    variant={"link"}
+                <Link
+                    href={`/products/${slug}`}
                     className=" pl-0 text-md text-[#003B73] italic"
                 >
                     Read More
-                </Button>
+                </Link>
             </div>
         </div>
     );
@@ -72,7 +74,7 @@ export const ImageOrPlaceholder: React.FC<ImageOrPlaceholderProps> = ({
         <Image
             src={image}
             alt={altText}
-            className="absolute inset-0 object-contain object-center hover:scale-105 transition-transform duration-300 rounded-xl border"
+            className="absolute inset-0 object-contain object-center hover:scale-95 transition-transform duration-300 rounded-xl border"
             draggable={false}
             quality={100}
             fill
