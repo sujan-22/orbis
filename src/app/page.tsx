@@ -1,6 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
+import { motion } from "framer-motion";
+import { fadeInUp } from "@/lib/animation";
 import Image from "next/image";
 import {
     Carousel,
@@ -133,8 +135,8 @@ const APPLICATION_IMAGES = [
 
 export default function Home() {
     return (
-        <div>
-            {/* Hero Carousel */}
+        <div className="">
+            {/* Hero */}
             <Carousel className="w-full relative">
                 <CarouselContent>
                     {SLIDES.map((slide, index) => (
@@ -171,37 +173,53 @@ export default function Home() {
                 </CarouselContent>
             </Carousel>
 
-            <MaxWidthWrapper>
-                {/* Why Choose Orbis Valves Section */}
-                <section className="py-20">
+            {/* Why Choose */}
+            <section className="bg-[#F9FAFB] py-20">
+                <MaxWidthWrapper>
                     <SectionHeading title="Why Choose Orbis Valves?" />
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
-                        {FEATURE_CARDS.map((card) => (
+                    <motion.div
+                        className="grid grid-cols-1 md:grid-cols-3 gap-8"
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: false, amount: 0.3 }}
+                        variants={fadeInUp}
+                        transition={{ staggerChildren: 0.2 }}
+                    >
+                        {FEATURE_CARDS.map((c) => (
                             <InfoCard
-                                key={card.title}
-                                icon={card.icon}
-                                title={card.title}
-                                description={card.description}
+                                key={c.title}
+                                icon={c.icon}
+                                title={c.title}
+                                description={c.description}
                                 color={{
                                     text: "text-[#003B73]",
                                     background: "bg-white",
                                 }}
-                                transparent={true}
+                                transparent
                             />
                         ))}
-                    </div>
-                </section>
+                    </motion.div>
+                </MaxWidthWrapper>
+            </section>
 
-                {/* Our Capabilities Section */}
-                <section className="py-20">
+            {/* Capabilities */}
+            <section className="bg-[#E5F7FA] py-20">
+                <MaxWidthWrapper>
                     <SectionHeading title="Our Capabilities" />
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {DETAIL_CARDS.map((card) => (
+                    <motion.div
+                        className="grid grid-cols-1 md:grid-cols-3 gap-8"
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: false, amount: 0.3 }}
+                        variants={fadeInUp}
+                        transition={{ staggerChildren: 0.2 }}
+                    >
+                        {DETAIL_CARDS.map((c) => (
                             <InfoCard
-                                key={card.title}
-                                icon={card.icon}
-                                title={card.title}
-                                description={card.description}
+                                key={c.title}
+                                icon={c.icon}
+                                title={c.title}
+                                description={c.description}
                                 color={{
                                     text: "text-[#5DE0E6]",
                                     background: "bg-[#003B73]",
@@ -209,75 +227,95 @@ export default function Home() {
                                 }}
                             />
                         ))}
-                    </div>
-                </section>
+                    </motion.div>
+                </MaxWidthWrapper>
+            </section>
 
-                {/* Featured Products Section */}
-                <section className="py-20">
+            {/* Featured Products */}
+            <section className="bg-white py-20">
+                <MaxWidthWrapper>
                     <SectionHeading title="Featured Products" />
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {PRODUCTS.slice(0, 3).map((prod) => (
-                            <Link
-                                href={`/products/${prod.slug}`}
-                                key={prod.name}
-                            >
-                                <Product
-                                    size="square"
-                                    isFeatured={true}
-                                    key={prod.name}
-                                    initialImage={prod.image}
-                                    name={prod.name}
-                                    description={prod.description}
-                                    slug={prod.slug}
-                                />
-                            </Link>
+                    <motion.div
+                        className="grid grid-cols-1 md:grid-cols-3 gap-8"
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: false, amount: 0.3 }}
+                        variants={fadeInUp}
+                        transition={{ staggerChildren: 0.2 }}
+                    >
+                        {PRODUCTS.slice(0, 3).map((p) => (
+                            <Product
+                                key={p.slug}
+                                size="square"
+                                isFeatured
+                                initialImage={p.image}
+                                name={p.name}
+                                description={p.description}
+                                slug={p.slug}
+                            />
                         ))}
-                    </div>
-                    <div className="mt-10 flex justify-end">
-                        <Link href={"products/gate-valve"}>
-                            <Button className="bg-[#003B73] cursor-pointer text-white">
-                                View More
+                    </motion.div>
+                    <div className="mt-10 text-right">
+                        <Link href="/products/gate-valve">
+                            <Button className="bg-[#003B73] text-white">
+                                View All Products
                             </Button>
                         </Link>
                     </div>
-                </section>
+                </MaxWidthWrapper>
+            </section>
 
-                {/* Applications Section */}
-                <section className="py-20">
+            {/* Call to Action */}
+            <section className="bg-gradient-to-r from-[#003B73] to-[#004AAD] py-16">
+                <MaxWidthWrapper className="text-center text-white">
+                    <h2 className="text-3xl font-bold mb-4">
+                        Ready to Elevate Your Flow Control?
+                    </h2>
+                    <p className="mb-6 opacity-90">
+                        Speak with our experts today and find the perfect valve
+                        for your project.
+                    </p>
+                    <Link href="/contact">
+                        <Button className="bg-[#5DE0E6] text-[#003B73] hover:bg-[#0078A6] cursor-pointer">
+                            Contact Us
+                        </Button>
+                    </Link>
+                </MaxWidthWrapper>
+            </section>
+
+            {/* Industries We Serve */}
+            <section className="bg-[#F9FAFB] py-20">
+                <MaxWidthWrapper>
                     <SectionHeading title="Industries We Serve" />
                     <Carousel
                         opts={{ align: "center", loop: true }}
                         plugins={[
                             Autoplay({ delay: 1500, stopOnInteraction: true }),
                         ]}
-                        className="w-full relative"
+                        className="w-full"
                     >
-                        <CarouselContent className="flex">
-                            {APPLICATION_IMAGES.map((application, index) => (
+                        <CarouselContent className="flex gap-4">
+                            {APPLICATION_IMAGES.map((app, i) => (
                                 <CarouselItem
-                                    key={index}
-                                    className="basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
+                                    key={i}
+                                    className="basis-1/2 md:basis-1/3 lg:basis-1/4"
                                 >
-                                    <div className="relative">
-                                        <img
-                                            src={application.image}
-                                            alt={application.name}
-                                            className="w-full h-full object-cover rounded-md"
-                                            style={{ aspectRatio: "1 / 1" }}
-                                        />
-                                        <p className="text-lg font-semibold text-[#003B73] text-center mt-2">
-                                            {application.name}
-                                        </p>
-                                    </div>
+                                    <img
+                                        src={app.image}
+                                        alt={app.name}
+                                        className="w-full aspect-square rounded-lg object-cover"
+                                    />
+                                    <p className="mt-2 text-center text-[#003B73] font-semibold">
+                                        {app.name}
+                                    </p>
                                 </CarouselItem>
                             ))}
                         </CarouselContent>
-
-                        <CarouselPrevious className="absolute left-2 top-1/2 transform -translate-y-1/2 z-10" />
-                        <CarouselNext className="absolute right-2 top-1/2 transform -translate-y-1/2 z-10" />
+                        <CarouselPrevious className="absolute left-2 top-1/2 -translate-y-1/2" />
+                        <CarouselNext className="absolute right-2 top-1/2 -translate-y-1/2" />
                     </Carousel>
-                </section>
-            </MaxWidthWrapper>
+                </MaxWidthWrapper>
+            </section>
         </div>
     );
 }

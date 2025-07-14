@@ -27,7 +27,13 @@ const Product: React.FC<ProductProps> = ({
     slug,
 }) => {
     return (
-        <div className={cn("flex flex-col w-full", className)}>
+        <Link
+            href={`/products/${slug}`}
+            className={cn(
+                "flex flex-col w-full hover:shadow-md transition-shadow rounded-xl overflow-hidden",
+                className
+            )}
+        >
             <div
                 className={cn(
                     "relative overflow-hidden transition-shadow duration-200",
@@ -45,7 +51,7 @@ const Product: React.FC<ProductProps> = ({
             >
                 <ImageOrPlaceholder image={initialImage} altText={name} />
             </div>
-            <div className="mt-4">
+            <div className="mt-4 px-2 pb-2">
                 <p
                     className="text-xl font-semibold text-[#003B73]"
                     data-testid="product-title"
@@ -55,14 +61,11 @@ const Product: React.FC<ProductProps> = ({
                 <p className="mt-1 text-md text-[#004AAD] overflow-hidden text-ellipsis line-clamp-3">
                     {description}
                 </p>
-                <Link
-                    href={`/products/${slug}`}
-                    className=" pl-0 text-md text-[#003B73] italic"
-                >
-                    Read More
-                </Link>
+                <span className="block mt-2 text-md text-[#003B73] italic">
+                    Read More →
+                </span>
             </div>
-        </div>
+        </Link>
     );
 };
 
