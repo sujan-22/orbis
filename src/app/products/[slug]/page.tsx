@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { PRODUCTS } from "@/lib/products";
 import { notFound } from "next/navigation";
-import { Button } from "@/components/ui/button";
 import { PRODUCT_MATERIALS } from "@/lib/product-material";
 import ProductMaterialTable from "./components/material-table";
+import { BrochureDialog } from "@/components/helpers/brochure-dialog";
 
 interface PageProps {
     params: Promise<{ slug: string }>;
@@ -45,15 +45,9 @@ export default async function ProductPage({ params }: PageProps) {
                     <p className="mt-4 text-md text-[#004AAD] leading-relaxed">
                         {product.description}
                     </p>
-                    <a
-                        href="/assets/orbis_valves_brochure.pdf"
-                        download
-                        className="inline-block mt-4"
-                    >
-                        <Button className="bg-[#003B73] text-white cursor-pointer">
-                            Download Brochure
-                        </Button>
-                    </a>
+                    <div className="inline-block mt-4">
+                        <BrochureDialog />
+                    </div>
                 </div>
             </div>
             {materials.length > 0 && (

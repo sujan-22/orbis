@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
 import * as z from "zod";
 
 const formSchema = z.object({
@@ -21,33 +22,43 @@ const ContactForm = () => {
     const {
         register,
         handleSubmit,
+        watch,
         formState: { errors, isSubmitting },
         reset,
     } = useForm<FormData>({
         resolver: zodResolver(formSchema),
+        defaultValues: { name: "", email: "", phone: "", message: "" },
     });
+
+    // Watch all fields to detect if form is empty
+    const values = watch();
+    const isFormEmpty =
+        !values.name.trim() &&
+        !values.email.trim() &&
+        !values.phone.trim() &&
+        !values.message?.trim();
 
     const onSubmit = async (data: FormData) => {
         try {
-            const res = await fetch("/api/catalogue", {
+            const res = await fetch("https://formspree.io/f/xnnzpaov", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data),
             });
 
-            const result = await res.json();
-
-            if (result.success) {
-                alert("Message sent successfully!");
-                reset();
-            } else {
-                alert("Failed to send message. Please try again.");
+            if (!res.ok) {
+                const text = await res.text();
+                throw new Error(text || "Formspree error");
             }
-        } catch (err) {
-            console.error("Submit error:", err);
-            alert("Something went wrong!");
+
+            reset();
+            toast.success("Thanks! Your message was sent.");
+        } catch (err: unknown) {
+            console.error(err);
+            toast.error("Oops—couldn’t send. Please try again.");
         }
     };
+
     return (
         <div>
             <form
@@ -91,7 +102,7 @@ const ContactForm = () => {
                 <div className="flex justify-start">
                     <Button
                         type="submit"
-                        disabled={isSubmitting}
+                        disabled={isSubmitting || isFormEmpty}
                         className="bg-[#5DE0E6] text-white hover:bg-[#004badbd] cursor-pointer"
                     >
                         {isSubmitting ? "Submitting..." : "Submit"}

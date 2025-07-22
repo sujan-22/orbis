@@ -104,6 +104,12 @@ const DETAIL_CARDS = [
         description:
             "Valves pass rigorous mechanical and chemical tests, with detailed certificates provided to customers. Custom tests available on request.",
     },
+    {
+        icon: FaShieldAlt,
+        title: "Stringent Quality Control",
+        description:
+            "Each valve is subjected to a series of in-process and final inspections, including hydrostatic and pneumatic testing, ensuring unmatched reliability before reaching our customers.",
+    },
 ];
 
 const APPLICATION_IMAGES = [
@@ -137,7 +143,11 @@ export default function Home() {
     return (
         <div className="">
             {/* Hero */}
-            <Carousel className="w-full relative">
+            <Carousel
+                className="w-full relative"
+                opts={{ align: "center", loop: true }}
+                plugins={[Autoplay({ delay: 5000, stopOnInteraction: true })]}
+            >
                 <CarouselContent>
                     {SLIDES.map((slide, index) => (
                         <CarouselItem
@@ -156,8 +166,8 @@ export default function Home() {
                             <div className="absolute inset-0 bg-black/40" />
 
                             <div className="absolute inset-0 flex items-center justify-center px-4">
-                                <CarouselPrevious className="absolute left-6 z-10 bg-white/30 hover:bg-white/50 text-white p-2 rounded-full" />
-                                <CarouselNext className="absolute right-6 z-10 bg-white/30 hover:bg-white/50 text-white p-2 rounded-full" />
+                                {/* <CarouselPrevious className="absolute left-6 z-10 bg-white/30 hover:bg-white/50 text-white p-2 rounded-full" />
+                                <CarouselNext className="absolute right-6 z-10 bg-white/30 hover:bg-white/50 text-white p-2 rounded-full" /> */}
 
                                 <div className="max-w-2xl text-center text-white">
                                     <h1 className="text-5xl md:text-6xl font-bold uppercase">

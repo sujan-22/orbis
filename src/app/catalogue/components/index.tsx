@@ -9,7 +9,9 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { toast } from "sonner";
 import Image from "next/image";
+import { BrochureDialog } from "@/components/helpers/brochure-dialog";
 
 const formSchema = z.object({
     name: z.string().min(1, "Name is required"),
@@ -31,20 +33,22 @@ export default function CatalogueInquiry() {
 
     const onSubmit = async (data: FormData) => {
         try {
-            const res = await fetch("/api/catalogue", {
+            const res = await fetch("https://formspree.io/f/xnnzpaov", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data),
             });
-            const result = await res.json();
-            if (result.success) {
-                alert("Inquiry sent successfully!");
-                reset();
-            } else {
-                alert("Failed to send. Please try again.");
+
+            if (!res.ok) {
+                const text = await res.text();
+                throw new Error(text || "Formspree error");
             }
-        } catch {
-            alert("Something went wrong. Please try later.");
+
+            reset();
+            toast.success("Thanks! Your message was sent.");
+        } catch (err: unknown) {
+            console.error(err);
+            toast.error("Oops—couldn’t send. Please try again.");
         }
     };
 
@@ -63,13 +67,9 @@ export default function CatalogueInquiry() {
                             priority
                             objectFit="contain"
                         />
-                        <a
-                            href="/assets/orbis_valves_brochure.pdf"
-                            download
-                            className="absolute bottom-4 right-20 bg-[#003B73] text-white px-4 py-2 rounded-md shadow hover:bg-[#005494] transition"
-                        >
-                            Download PDF
-                        </a>
+                        <div className="absolute bottom-4 right-20 ">
+                            <BrochureDialog />
+                        </div>
                     </div>
 
                     {/* Right: Inquiry Form */}
