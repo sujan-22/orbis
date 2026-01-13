@@ -1,18 +1,25 @@
 import Image from "next/image";
 import { PRODUCTS } from "@/lib/products";
 import { notFound } from "next/navigation";
-import { PRODUCT_MATERIALS } from "@/lib/product-material";
-import ProductMaterialTable from "./components/material-table";
+import { PRODUCT_SPECS } from "@/lib/product-material";
 import { BrochureDialog } from "@/components/helpers/brochure-dialog";
+import SpecTable from "./components/spec-table";
+import KeyValueTable from "./components/keyvalue-table";
 
 interface PageProps {
     params: Promise<{ slug: string }>;
 }
 
+export function generateStaticParams() {
+    return PRODUCTS.map((product) => ({
+        slug: product.slug,
+    }));
+}
+
 export default async function ProductPage({ params }: PageProps) {
     const { slug } = await params;
     const product = PRODUCTS.find((p) => p.slug === slug);
-    const materials = PRODUCT_MATERIALS[slug] || [];
+    const sections = PRODUCT_SPECS[slug] || [];
 
     if (!product) notFound();
 
@@ -50,14 +57,21 @@ export default async function ProductPage({ params }: PageProps) {
                     </div>
                 </div>
             </div>
-            {materials.length > 0 && (
-                <div className="mt-10">
+            {sections.map((s) => (
+                <div key={s.id} className="mt-10">
                     <h3 className="text-2xl font-semibold text-[#003B73]">
-                        Material Specifications
+                        {s.title}
                     </h3>
-                    <ProductMaterialTable rows={materials} />
+                    {s.kind === "table" ? (
+                        <SpecTable section={s} />
+                    ) : (
+                        <KeyValueTable section={s} />
+                    )}
+                    {s.note ? (
+                        <p className="mt-2 text-sm text-[#004AAD]">{s.note}</p>
+                    ) : null}
                 </div>
-            )}
+            ))}
         </div>
     );
 }

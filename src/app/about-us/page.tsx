@@ -11,15 +11,19 @@ export default function AboutUs() {
     return (
         <div className="bg-white">
             {/* 1. Hero */}
-            <div className="relative h-64 md:h-96 w-full">
+            <div className="relative h-[240px] sm:h-[320px] md:h-[420px] w-full overflow-hidden">
                 <img
-                    src="/assets/about-hero.jpg"
-                    alt="Orbis Valves Facility"
-                    className="object-cover object-center w-full h-full"
+                    src="/assets/about_hero.jpg"
+                    alt="Orbis Valves"
+                    className="h-full w-full object-cover object-center"
                 />
-                <div className="absolute inset-0 bg-black/40 flex items-center justify-center px-4">
-                    <h1 className="text-3xl md:text-5xl text-white font-bold text-center">
-                        “Complete Global Flow Control & Solution”
+
+                {/* Better overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/35 to-black/10" />
+
+                <div className="absolute inset-0 flex items-center justify-center px-4">
+                    <h1 className="max-w-5xl text-center text-3xl sm:text-4xl md:text-5xl font-bold text-white drop-shadow">
+                        Complete Global Flow Control & Solution
                     </h1>
                 </div>
             </div>
@@ -27,11 +31,47 @@ export default function AboutUs() {
             <MaxWidthWrapper className="py-16">
                 {/* 2. Two‑column intro */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                    <img
-                        src="/assets/team-photo.jpg"
-                        alt="Our Team"
-                        className="rounded-lg shadow-lg w-full h-80 object-cover object-center"
-                    />
+                    <div className="rounded-lg border bg-white shadow-sm p-4">
+                        <p className="text-sm font-semibold text-[#003B73] mb-3">
+                            Featured Products
+                        </p>
+
+                        <div className="grid grid-cols-2 gap-3">
+                            {[
+                                {
+                                    src: "/assets/products/gate-valve.png",
+                                    label: "Gate Valve",
+                                },
+                                {
+                                    src: "/assets/products/globe-valve.png",
+                                    label: "Globe Valve",
+                                },
+                                {
+                                    src: "/assets/products/2pc-ball-valve.png",
+                                    label: "2PC Ball Valve",
+                                },
+                                {
+                                    src: "/assets/products/dual-plate-check-valve.png",
+                                    label: "Check Valve",
+                                },
+                            ].map((p) => (
+                                <div
+                                    key={p.label}
+                                    className="rounded-md border bg-[#F9FAFB] p-3 flex flex-col items-center"
+                                >
+                                    <img
+                                        src={p.src}
+                                        alt={p.label}
+                                        className="h-24 w-full object-contain"
+                                        draggable={false}
+                                    />
+                                    <span className="mt-2 text-xs text-[#004AAD]">
+                                        {p.label}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
 
                     <div className="space-y-4 text-[#003B73]">
                         <SectionHeading title="About Orbis Valves Industries" />

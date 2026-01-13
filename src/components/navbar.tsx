@@ -45,6 +45,10 @@ export const NAV_LINKS = [
                 href: "/products/knife-edge-gate-valve",
                 label: "Knife Edge Gate Valve",
             },
+            {
+                href: "/products/disk-type-check-valve",
+                label: "Disk Type Check Valve",
+            },
         ],
     },
     { href: "/catalogue", label: "Catalogue" },
@@ -70,7 +74,7 @@ const Navbar = () => {
                             <div className="flex items-center h-full">
                                 <Link href="/" className="flex items-center">
                                     <Image
-                                        src="/logo.svg"
+                                        src="/assets/logo.png"
                                         alt="Orbis Valves Industries Logo"
                                         width={170}
                                         height={50}

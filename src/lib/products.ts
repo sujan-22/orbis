@@ -66,4 +66,11 @@ export const PRODUCTS: Product[] = [
             '"ORBIS" make Knife Edge Gate Valves with sharp, blade-like gates that cut through slurries and viscous fluids. Ideal for heavy oils, greases, pulp, varnish, and wastewater applications, offering clean closure in demanding environments. (150# / 300#)',
         image: "/assets/products/knife-edge-gate-valve.png",
     },
+    {
+        slug: "disk-type-check-valve",
+        name: "Disk Type Check Valve",
+        description:
+            '"ORBIS" make Disk Type Check Valves are automatic valve that open with forward flow and close with reverse flow to prevent backflow.',
+        image: "/assets/products/disk-type-check-valve.png",
+    },
 ];

@@ -21,7 +21,7 @@ export default function Footer() {
                         <div className="inline-block bg-white p-2 rounded-lg shadow-md">
                             <Link href="/">
                                 <Image
-                                    src="/logo.svg"
+                                    src="/assets/logo.png"
                                     alt="Orbis Valves Industries"
                                     width={150}
                                     height={50}
