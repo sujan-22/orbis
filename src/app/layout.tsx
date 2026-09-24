@@ -1,20 +1,35 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Archivo, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
-import PageTransition from "@/components/helpers/page-transition";
-import { Toaster } from "@/components/ui/sonner";
+import Providers from "@/components/providers";
+import { SITE } from "@/lib/site";
 
-const inter = Inter({
+const archivo = Archivo({
     subsets: ["latin"],
-    weight: ["400", "500", "600", "700"],
+    variable: "--font-archivo",
+    display: "swap",
 });
 
+const plexMono = IBM_Plex_Mono({
+    subsets: ["latin"],
+    weight: ["400", "500"],
+    variable: "--font-plex-mono",
+    display: "swap",
+});
+
+const DESCRIPTION =
+    "Orbis Valves Industries manufactures industrial valves in Ahmedabad, India — gate, globe, ball, check, butterfly and knife-edge valves in ductile iron, carbon steel and stainless steel for power, oil & gas, marine, water and process industries.";
+
 export const metadata: Metadata = {
-    title: "Orbis Valves Industries | Industrial Valve Manufacturer in India",
-    description:
-        "Orbis Valves Industries manufactures high-quality industrial valves including globe, gate, butterfly, check, ball, pulp, and knife-edge valves using materials like Ductile Iron, Carbon Steel, and Stainless Steel. Trusted in petrochemical, power, food, pharma, and water industries globally.",
+    metadataBase: new URL(SITE.url),
+    title: {
+        default:
+            "Orbis Valves Industries | Industrial Valve Manufacturer in Ahmedabad, India",
+        template: "%s | Orbis Valves Industries",
+    },
+    description: DESCRIPTION,
     keywords: [
         "Orbis Valves",
         "Industrial Valve Manufacturer",
@@ -24,40 +39,58 @@ export const metadata: Metadata = {
         "Butterfly Valve",
         "Knife-edge Valve",
         "Check Valve",
-        "Pulp Valve",
         "Wafer Check Valve",
         "Dual Plate Check Valve",
+        "Disk Check Valve",
         "Valve Supplier India",
         "Ductile Iron Valve",
         "Stainless Steel Valves",
         "Ahmedabad Valve Company",
-        "High Pressure Valves",
-        "Custom Valve Solutions",
         "Oil and Gas Valves",
         "Power Plant Valves",
-        "Food and Beverage Valves",
     ],
-    authors: [
-        {
-            name: "Orbis Valves Industries",
-            url: "https://orbisvalves.com",
-        },
-    ],
-    creator: "Orbis Valves Industries",
-    publisher: "Orbis Valves Industries",
+    authors: [{ name: SITE.name, url: SITE.url }],
+    creator: SITE.name,
+    publisher: SITE.name,
     openGraph: {
-        title: "Orbis Valves Industries | Precision Engineered Industrial Valves",
-        description:
-            "Serving industries worldwide with a complete range of industrial valves made from premium materials. Engineered in Ahmedabad, Gujarat for excellence in flow control.",
-        url: "https://orbisvalves.com",
-        siteName: "Orbis Valves Industries",
+        title: "Orbis Valves Industries | Industrial valves, engineered for flow",
+        description: DESCRIPTION,
+        url: SITE.url,
+        siteName: SITE.name,
         locale: "en_IN",
         type: "website",
+        images: [{ url: "/images/og.jpg", width: 1200, height: 630 }],
+    },
+    twitter: {
+        card: "summary_large_image",
+        images: ["/images/og.jpg"],
     },
     robots: {
         index: true,
         follow: true,
-        nocache: false,
+    },
+};
+
+export const viewport: Viewport = {
+    themeColor: "#f4f6f8",
+};
+
+const organizationJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: SITE.name,
+    url: SITE.url,
+    logo: `${SITE.url}/assets/logo.png`,
+    email: SITE.email,
+    telephone: "+91-81530-18111",
+    slogan: SITE.tagline,
+    address: {
+        "@type": "PostalAddress",
+        streetAddress: SITE.address.street,
+        addressLocality: SITE.address.locality,
+        addressRegion: SITE.address.region,
+        postalCode: SITE.address.postalCode,
+        addressCountry: SITE.address.country,
     },
 };
 
@@ -67,12 +100,19 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
-            <body className={`${inter.className} antialiased`}>
-                <Navbar />
-                <PageTransition>{children}</PageTransition>
-                <Toaster />
-                <Footer />
+        <html lang="en" className={`${archivo.variable} ${plexMono.variable}`}>
+            <body id="top" className="font-sans antialiased">
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify(organizationJsonLd),
+                    }}
+                />
+                <Providers>
+                    <Navbar />
+                    <main className="pt-16 lg:pt-[76px]">{children}</main>
+                    <Footer />
+                </Providers>
             </body>
         </html>
     );

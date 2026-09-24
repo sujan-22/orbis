@@ -1,156 +1,233 @@
-/* eslint-disable @next/next/no-img-element */
-"use client";
-
+import Image from "next/image";
+import CtaBand from "@/components/cta-band";
 import MaxWidthWrapper from "@/components/max-width-wrapper";
-import SectionHeading from "@/components/helpers/section-heading";
-import { FaCertificate, FaGlobe, FaIndustry, FaUsers } from "react-icons/fa";
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import PageHeader from "@/components/page-header";
+import Reveal from "@/components/reveal";
+import SectionLabel from "@/components/section-label";
+import { INDUSTRIES } from "@/lib/industries";
+import { PRODUCTS } from "@/lib/products";
+import { MATERIAL_GRADES } from "@/lib/site";
+import { pageMetadata } from "@/lib/seo";
+import { pad2 } from "@/lib/utils";
+
+export const metadata = pageMetadata({
+    title: "About",
+    description:
+        "Orbis Valves Industries is an Ahmedabad-based manufacturer of gate, globe, ball, check, butterfly and knife-edge valves in ductile iron, carbon steel and stainless steel.",
+    path: "/about-us/",
+});
+
+const STRENGTHS = [
+    {
+        title: "Certified quality",
+        text: "ISO, PED, API & NACE compliance across the range.",
+    },
+    {
+        title: "Advanced facility",
+        text: "CNC machining and automated inspection in Ahmedabad.",
+    },
+    {
+        title: "Global reach",
+        text: "Serving power, petrochemical, pharma and more.",
+    },
+    {
+        title: "Customer focus",
+        text: "Tailored solutions and 24/7 support.",
+    },
+];
+
+const MATERIAL_GROUPS = [
+    { family: "Cast & ductile iron", grades: ["GG25", "GGG40"] },
+    { family: "Carbon & alloy steel", grades: ["A105N", "LF2", "WCB", "WC6"] },
+    {
+        family: "Stainless & high alloy",
+        grades: ["316L", "CF8M", "250SMO", "Duplex"],
+    },
+];
+
+const FIGURES = [
+    { value: pad2(PRODUCTS.length), label: "Valve families" },
+    { value: `${MATERIAL_GRADES.length}+`, label: "Material grades" },
+    { value: "150# / 300#", label: "Pressure classes" },
+    { value: pad2(INDUSTRIES.length), label: "Industries served" },
+];
+
 export default function AboutUs() {
-    const router = useRouter();
     return (
-        <div className="bg-white">
-            {/* 1. Hero */}
-            <div className="relative h-[240px] sm:h-[320px] md:h-[420px] w-full overflow-hidden">
-                <img
-                    src="/assets/about_hero.jpg"
-                    alt="Orbis Valves"
-                    className="h-full w-full object-cover object-center"
-                />
+        <>
+            <PageHeader
+                label="About Orbis"
+                title={
+                    <>
+                        Flow control, engineered with{" "}
+                        <span className="text-muted-ink/70">precision.</span>
+                    </>
+                }
+                lead="Orbis Valves Industries builds industrial valves in Ahmedabad, Gujarat — for customers who need durability, precision and a partner they can rely on."
+            />
 
-                {/* Better overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/35 to-black/10" />
-
-                <div className="absolute inset-0 flex items-center justify-center px-4">
-                    <h1 className="max-w-5xl text-center text-3xl sm:text-4xl md:text-5xl font-bold text-white drop-shadow">
-                        Complete Global Flow Control & Solution
-                    </h1>
+            <section className="relative">
+                <div className="relative aspect-[4/3] w-full overflow-hidden bg-ink sm:aspect-[21/9]">
+                    <Image
+                        src="/images/handwheel.webp"
+                        alt="Close-up of an industrial valve hand wheel"
+                        fill
+                        priority
+                        className="animate-fade object-cover object-[center_60%]"
+                    />
                 </div>
-            </div>
+            </section>
 
-            <MaxWidthWrapper className="py-16">
-                {/* 2. Two‑column intro */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                    <div className="rounded-lg border bg-white shadow-sm p-4">
-                        <p className="text-sm font-semibold text-[#003B73] mb-3">
-                            Featured Products
-                        </p>
-
-                        <div className="grid grid-cols-2 gap-3">
-                            {[
-                                {
-                                    src: "/assets/products/gate-valve.png",
-                                    label: "Gate Valve",
-                                },
-                                {
-                                    src: "/assets/products/globe-valve.png",
-                                    label: "Globe Valve",
-                                },
-                                {
-                                    src: "/assets/products/2pc-ball-valve.png",
-                                    label: "2PC Ball Valve",
-                                },
-                                {
-                                    src: "/assets/products/dual-plate-check-valve.png",
-                                    label: "Check Valve",
-                                },
-                            ].map((p) => (
-                                <div
-                                    key={p.label}
-                                    className="rounded-md border bg-[#F9FAFB] p-3 flex flex-col items-center"
-                                >
-                                    <img
-                                        src={p.src}
-                                        alt={p.label}
-                                        className="h-24 w-full object-contain"
-                                        draggable={false}
-                                    />
-                                    <span className="mt-2 text-xs text-[#004AAD]">
-                                        {p.label}
-                                    </span>
-                                </div>
-                            ))}
+            {/* Story */}
+            <section className="py-24 lg:py-36">
+                <MaxWidthWrapper className="grid gap-10 lg:grid-cols-12">
+                    <Reveal className="lg:col-span-3">
+                        <SectionLabel index="01">Who we are</SectionLabel>
+                    </Reveal>
+                    <div className="lg:col-span-8">
+                        <Reveal>
+                            <p className="display-md text-balance">
+                                We manufacture globe, gate, butterfly, check,
+                                ball and knife-edge valves — crafted in ductile
+                                iron, carbon steel and premium stainless
+                                steels.
+                            </p>
+                        </Reveal>
+                        <div className="mt-12 grid gap-8 text-lg leading-relaxed text-muted-ink md:grid-cols-2">
+                            <Reveal>
+                                <p>
+                                    Since our inception, Orbis Valves
+                                    Industries has focused on one thing:
+                                    delivering top-tier industrial valves that
+                                    earn our customers&apos; trust. Our
+                                    facility in Ahmedabad, Gujarat is
+                                    continually upgraded to meet growing global
+                                    demand.
+                                </p>
+                            </Reveal>
+                            <Reveal delay={0.08}>
+                                <p>
+                                    We pride ourselves on rigorous quality
+                                    control, world-class materials and an
+                                    unwavering commitment to exceed
+                                    expectations. Our vision is to remain the
+                                    benchmark for durability, precision and
+                                    customer satisfaction in flow control.
+                                </p>
+                            </Reveal>
                         </div>
                     </div>
+                </MaxWidthWrapper>
+            </section>
 
-                    <div className="space-y-4 text-[#003B73]">
-                        <SectionHeading title="About Orbis Valves Industries" />
-                        <p className="text-base leading-relaxed">
-                            We, <strong>Orbis Valves Industries</strong>, have
-                            been winning our customers’ hearts since our
-                            inception by delivering top‑tier industrial
-                            valves—Globe, Gate, Butterfly, Check, Ball, Pulp,
-                            Knife‑Edge and more—crafted in Ductile Iron, Carbon
-                            Steel and premium Stainless Steels (GG25, GGG40,
-                            A105N, LF2, WCB, WC6, 316L, 250SMO, Duplex, etc.).
-                        </p>
-                        <p className="text-base leading-relaxed">
-                            Based in Ahmedabad, Gujarat, our state‑of‑the‑art
-                            facility is continually upgraded to meet growing
-                            global demand. We pride ourselves on rigorous
-                            quality controls, world‑class materials, and an
-                            unwavering commitment to exceed expectations.
-                        </p>
-                        <p className="text-base leading-relaxed">
-                            Our vision is to remain the benchmark for
-                            durability, precision, and customer satisfaction in
-                            flow‑control solutions around the globe.
-                        </p>
-                    </div>
-                </div>
-
-                {/* 3. Icon Highlights */}
-                <div className="mt-16">
-                    <SectionHeading title="Our Core Strengths" />
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-8">
-                        {[
-                            {
-                                icon: FaCertificate,
-                                title: "Certified Quality",
-                                text: "ISO, PED, API & NACE compliance",
-                            },
-                            {
-                                icon: FaIndustry,
-                                title: "Advanced Facility",
-                                text: "CNC machining & automated inspection",
-                            },
-                            {
-                                icon: FaGlobe,
-                                title: "Global Reach",
-                                text: "Serving power, petrochem, pharma & more",
-                            },
-                            {
-                                icon: FaUsers,
-                                title: "Customer Focus",
-                                text: "Tailored solutions & 24/7 support",
-                            },
-                        ].map((c) => (
-                            <div
-                                key={c.title}
-                                className="flex flex-col items-center text-center p-6 bg-[#F9FAFB] rounded-lg shadow-sm"
+            {/* Figures */}
+            <section className="border-y border-line bg-paper">
+                <MaxWidthWrapper>
+                    <dl className="grid grid-cols-2 lg:grid-cols-4">
+                        {FIGURES.map((f, i) => (
+                            <Reveal
+                                key={f.label}
+                                delay={i * 0.06}
+                                className="flex flex-col-reverse gap-3 border-line py-10 odd:pr-4 even:border-l even:pl-5 max-lg:[&:nth-child(n+3)]:border-t lg:border-l lg:px-8 lg:py-14 lg:first:border-l-0 lg:first:pl-0"
                             >
-                                <c.icon className="text-4xl text-[#0078A6]" />
-                                <h3 className="mt-4 text-xl font-semibold text-[#003B73]">
-                                    {c.title}
+                                <dt className="eyebrow text-muted-ink">
+                                    {f.label}
+                                </dt>
+                                <dd className="display-md">{f.value}</dd>
+                            </Reveal>
+                        ))}
+                    </dl>
+                </MaxWidthWrapper>
+            </section>
+
+            {/* Strengths */}
+            <section className="py-24 lg:py-36">
+                <MaxWidthWrapper>
+                    <Reveal>
+                        <SectionLabel index="02">Core strengths</SectionLabel>
+                        <h2 className="display-lg mt-7 max-w-3xl text-balance">
+                            What sets an Orbis valve apart.
+                        </h2>
+                    </Reveal>
+                    <ul className="mt-16 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+                        {STRENGTHS.map((s, i) => (
+                            <Reveal
+                                as="li"
+                                key={s.title}
+                                delay={i * 0.06}
+                                className="border-t border-ink pt-6"
+                            >
+                                <span className="eyebrow text-muted-ink">
+                                    {pad2(i + 1)}
+                                </span>
+                                <h3 className="mt-8 text-2xl font-medium tracking-[-0.025em]">
+                                    {s.title}
                                 </h3>
-                                <p className="mt-2 text-sm text-gray-600">
-                                    {c.text}
+                                <p className="mt-3 leading-relaxed text-muted-ink">
+                                    {s.text}
                                 </p>
-                            </div>
+                            </Reveal>
+                        ))}
+                    </ul>
+                </MaxWidthWrapper>
+            </section>
+
+            {/* Materials */}
+            <section className="bg-ink py-24 text-white lg:py-36">
+                <MaxWidthWrapper className="grid gap-16 lg:grid-cols-12 lg:gap-10">
+                    <Reveal className="lg:col-span-5">
+                        <SectionLabel index="03" tone="light">
+                            Materials
+                        </SectionLabel>
+                        <h2 className="display-lg mt-7 text-balance">
+                            The right metal for every medium.
+                        </h2>
+                        <p className="mt-7 max-w-md text-lg leading-relaxed text-white/60">
+                            From general water service to corrosive chemical
+                            lines, we build in the grade your application
+                            demands.
+                        </p>
+                        <div className="relative mt-12 aspect-[16/10] overflow-hidden">
+                            <Image
+                                src="/images/refinery-night.webp"
+                                alt="Refinery at night"
+                                fill
+                                className="object-cover"
+                            />
+                        </div>
+                    </Reveal>
+                    <div className="lg:col-span-6 lg:col-start-7">
+                        {MATERIAL_GROUPS.map((group, i) => (
+                            <Reveal
+                                key={group.family}
+                                delay={i * 0.06}
+                                className="border-t border-white/15 py-10 last:border-b"
+                            >
+                                <div className="flex items-baseline justify-between gap-6">
+                                    <h3 className="text-2xl font-medium tracking-[-0.025em]">
+                                        {group.family}
+                                    </h3>
+                                    <span className="eyebrow text-white/40">
+                                        {pad2(group.grades.length)} grades
+                                    </span>
+                                </div>
+                                <ul className="mt-6 flex flex-wrap gap-2">
+                                    {group.grades.map((g) => (
+                                        <li
+                                            key={g}
+                                            className="border border-white/15 px-3.5 py-2 font-mono text-sm text-white/85"
+                                        >
+                                            {g}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </Reveal>
                         ))}
                     </div>
-                </div>
+                </MaxWidthWrapper>
+            </section>
 
-                {/* 4. CTA */}
-                <div className="mt-16 text-center">
-                    <Button
-                        className="inline-block cursor-pointer bg-[#003B73] text-white font-semibold rounded-lg shadow hover:bg-[#005494] transition"
-                        onClick={() => router.push("/contact")}
-                    >
-                        Get in Touch
-                    </Button>
-                </div>
-            </MaxWidthWrapper>
-        </div>
+            <CtaBand />
+        </>
     );
 }

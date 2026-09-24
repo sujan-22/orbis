@@ -1,161 +1,242 @@
 "use client";
 
-import Link from "next/link";
-import MaxWidthWrapper from "./max-width-wrapper";
 import Image from "next/image";
-import { IoMdArrowDropdown } from "react-icons/io";
-import {
-    DropdownMenu,
-    DropdownMenuTrigger,
-    DropdownMenuContent,
-    DropdownMenuItem,
-} from "./ui/dropdown-menu";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Sidebar from "./sidebar";
-
-export const NAV_LINKS = [
-    { href: "/", label: "Home" },
-    { href: "/about-us", label: "About" },
-    {
-        label: "Product",
-        subLinks: [
-            { href: "/products/gate-valve", label: "Gate Valve" },
-            {
-                href: "/products/globe-valve-flange-ends",
-                label: "Globe Valve Flange Ends",
-            },
-            { href: "/products/2pc-ball-valve", label: "2PC Ball Valve" },
-            {
-                href: "/products/dual-plate-check-valve",
-                label: "Dual Plate Check Valve",
-            },
-            {
-                href: "/products/wafer-type-check-valve",
-                label: "Wafer Type Check Valve",
-            },
-            {
-                href: "/products/lever-operated-butterfly-valve",
-                label: "Lever Operated Butterfly Valve",
-            },
-            {
-                href: "/products/gear-operated-butterfly-valve",
-                label: "Gear Operated Butterfly Valve",
-            },
-            {
-                href: "/products/knife-edge-gate-valve",
-                label: "Knife Edge Gate Valve",
-            },
-            {
-                href: "/products/disk-type-check-valve",
-                label: "Disk Type Check Valve",
-            },
-        ],
-    },
-    { href: "/catalogue", label: "Catalogue" },
-    { href: "/application", label: "Application" },
-    { href: "/contact", label: "Contact Us" },
-];
-
-export const baseLinkClasses =
-    "text-base font-medium uppercase transition-all duration-200";
-export const activeClasses = "border-b-2 border-[#0078A6] text-[#003B73]";
-export const inactiveClasses = "hover:text-[#004AAD]";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowRight, ChevronDown } from "lucide-react";
+import Logo from "./logo";
+import MaxWidthWrapper from "./max-width-wrapper";
+import MobileMenu from "./mobile-menu";
+import { buttonVariants } from "./ui/button";
+import { NAV_LINKS, SITE } from "@/lib/site";
+import { PRODUCTS } from "@/lib/products";
+import { cn, isActivePath } from "@/lib/utils";
 
 const Navbar = () => {
     const pathname = usePathname();
+    const headerRef = useRef<HTMLElement>(null);
+    const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const [scrolled, setScrolled] = useState(false);
+    const [megaOpen, setMegaOpen] = useState(false);
+
+    useEffect(() => {
+        const onScroll = () => setScrolled(window.scrollY > 8);
+        onScroll();
+        window.addEventListener("scroll", onScroll, { passive: true });
+        return () => window.removeEventListener("scroll", onScroll);
+    }, []);
+
+    useEffect(() => {
+        setMegaOpen(false);
+    }, [pathname]);
+
+    useEffect(() => {
+        if (!megaOpen) return;
+        const onKey = (e: KeyboardEvent) => {
+            if (e.key === "Escape") setMegaOpen(false);
+        };
+        const onPointer = (e: PointerEvent) => {
+            if (!headerRef.current?.contains(e.target as Node)) {
+                setMegaOpen(false);
+            }
+        };
+        window.addEventListener("keydown", onKey);
+        document.addEventListener("pointerdown", onPointer);
+        return () => {
+            window.removeEventListener("keydown", onKey);
+            document.removeEventListener("pointerdown", onPointer);
+        };
+    }, [megaOpen]);
+
+    const openMega = useCallback(() => {
+        if (closeTimer.current) clearTimeout(closeTimer.current);
+        setMegaOpen(true);
+    }, []);
+
+    const scheduleClose = useCallback(() => {
+        if (closeTimer.current) clearTimeout(closeTimer.current);
+        closeTimer.current = setTimeout(() => setMegaOpen(false), 140);
+    }, []);
+
+    const solid = scrolled || megaOpen;
 
     return (
-        <div className="sticky top-0 inset-x-0 z-40">
-            <div className="bg-white">
-                <header className="relative h-24 mx-auto border-b border-[#004AAD] duration-200">
-                    <MaxWidthWrapper>
-                        <nav className="text-sm flex items-center justify-between w-full h-full">
-                            {/* Logo - always visible */}
-                            <div className="flex items-center h-full">
-                                <Link href="/" className="flex items-center">
-                                    <Image
-                                        src="/assets/logo.png"
-                                        alt="Orbis Valves Industries Logo"
-                                        width={170}
-                                        height={50}
-                                        className="bg-transparent"
-                                    />
-                                </Link>
-                            </div>
+        <header
+            ref={headerRef}
+            onMouseLeave={scheduleClose}
+            className={cn(
+                "fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color] duration-300",
+                solid
+                    ? "border-line bg-white/85 backdrop-blur-xl"
+                    : "border-transparent bg-transparent"
+            )}
+        >
+            <MaxWidthWrapper className="flex h-16 items-center justify-between gap-6 lg:h-[76px]">
+                <Link
+                    href="/"
+                    aria-label="Orbis Valves Industries — home"
+                    className="shrink-0"
+                    onMouseEnter={scheduleClose}
+                >
+                    <Logo className="h-6 lg:h-7" />
+                </Link>
 
-                            {/* Desktop Links - visible above 950px */}
-                            <div className="hidden min-[950px]:flex items-center space-x-6">
-                                {NAV_LINKS.map((link) => {
-                                    const isActive =
-                                        link.href === pathname ||
-                                        (link.subLinks &&
-                                            link.subLinks.some((sub) =>
-                                                pathname.startsWith(sub.href)
-                                            ));
-
-                                    return link.subLinks ? (
-                                        <DropdownMenu key={link.label}>
-                                            <DropdownMenuTrigger asChild>
-                                                <button
-                                                    className={`${baseLinkClasses} flex items-center hover:cursor-pointer ${
-                                                        isActive
-                                                            ? activeClasses
-                                                            : inactiveClasses
-                                                    }`}
-                                                >
-                                                    {link.label}
-                                                    <IoMdArrowDropdown className="ml-1" />
-                                                </button>
-                                            </DropdownMenuTrigger>
-                                            <DropdownMenuContent>
-                                                {link.subLinks.map((sub) => {
-                                                    const isSubActive =
-                                                        pathname === sub.href;
-                                                    return (
-                                                        <DropdownMenuItem
-                                                            asChild
-                                                            key={sub.href}
-                                                        >
-                                                            <Link
-                                                                href={sub.href}
-                                                                className={`block uppercase transition-all duration-200 hover:cursor-pointer ${
-                                                                    isSubActive
-                                                                        ? "text-[#003B73]"
-                                                                        : inactiveClasses
-                                                                }`}
-                                                            >
-                                                                {sub.label}
-                                                            </Link>
-                                                        </DropdownMenuItem>
-                                                    );
-                                                })}
-                                            </DropdownMenuContent>
-                                        </DropdownMenu>
-                                    ) : (
-                                        <Link
-                                            key={link.href}
-                                            href={link.href}
-                                            className={`${baseLinkClasses} hover:cursor-pointer ${
-                                                isActive
-                                                    ? activeClasses
-                                                    : inactiveClasses
-                                            }`}
+                <nav aria-label="Main" className="hidden lg:block">
+                    <ul className="flex items-center gap-1">
+                        {NAV_LINKS.map((link) => {
+                            const active = isActivePath(pathname, link.href);
+                            const isProducts = link.href === "/products";
+                            return (
+                                <li
+                                    key={link.href}
+                                    className="flex items-center"
+                                    onMouseEnter={
+                                        isProducts ? openMega : scheduleClose
+                                    }
+                                >
+                                    <Link
+                                        href={link.href}
+                                        aria-current={active ? "page" : undefined}
+                                        className={cn(
+                                            "relative px-4 py-2 text-[0.9375rem] tracking-[-0.01em] transition-colors",
+                                            active
+                                                ? "text-ink"
+                                                : "text-muted-ink hover:text-ink"
+                                        )}
+                                    >
+                                        {link.label}
+                                        {active && (
+                                            <span className="brand-gradient absolute inset-x-4 -bottom-0.5 h-px" />
+                                        )}
+                                    </Link>
+                                    {isProducts && (
+                                        <button
+                                            type="button"
+                                            aria-label="Show all products"
+                                            aria-expanded={megaOpen}
+                                            aria-controls="mega-menu"
+                                            onClick={() => setMegaOpen((o) => !o)}
+                                            className="-ml-3 grid size-7 cursor-pointer place-items-center text-muted-ink transition-colors hover:text-ink"
                                         >
-                                            {link.label}
-                                        </Link>
+                                            <ChevronDown
+                                                className={cn(
+                                                    "size-3.5 transition-transform duration-300",
+                                                    megaOpen && "rotate-180"
+                                                )}
+                                            />
+                                        </button>
+                                    )}
+                                </li>
+                            );
+                        })}
+                    </ul>
+                </nav>
+
+                <div
+                    className="flex items-center gap-5"
+                    onMouseEnter={scheduleClose}
+                >
+                    <a
+                        href={SITE.phone.href}
+                        className="eyebrow hidden text-muted-ink transition-colors hover:text-ink xl:block"
+                    >
+                        {SITE.phone.display}
+                    </a>
+                    <Link
+                        href="/contact"
+                        className={cn(
+                            buttonVariants({ size: "sm" }),
+                            "hidden sm:inline-flex"
+                        )}
+                    >
+                        Contact
+                        <ArrowRight className="transition-transform duration-300 group-hover/button:translate-x-0.5" />
+                    </Link>
+                    <MobileMenu pathname={pathname} />
+                </div>
+            </MaxWidthWrapper>
+
+            <AnimatePresence>
+                {megaOpen && (
+                    <motion.div
+                        id="mega-menu"
+                        initial={{ opacity: 0, y: -6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -6 }}
+                        transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                        onMouseEnter={openMega}
+                        className="absolute inset-x-0 top-full hidden border-b border-line bg-white shadow-[0_24px_48px_-24px_rgb(11_23_38/0.18)] lg:block"
+                    >
+                        <MaxWidthWrapper className="grid grid-cols-12 gap-10 py-10">
+                            <div className="col-span-3 flex flex-col border-r border-line pr-10">
+                                <p className="eyebrow text-muted-ink">
+                                    Product range
+                                </p>
+                                <p className="mt-4 text-2xl font-medium leading-tight tracking-[-0.03em] text-ink">
+                                    Nine valve families for isolation,
+                                    regulation and backflow prevention.
+                                </p>
+                                <div className="mt-auto flex flex-col items-start gap-3 pt-8">
+                                    <Link
+                                        href="/products"
+                                        className="group inline-flex items-center gap-2 text-sm font-medium text-ink"
+                                    >
+                                        View all products
+                                        <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+                                    </Link>
+                                    <Link
+                                        href="/catalogue"
+                                        className="group inline-flex items-center gap-2 text-sm text-muted-ink hover:text-ink"
+                                    >
+                                        Download the catalogue
+                                        <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+                                    </Link>
+                                </div>
+                            </div>
+                            <ul className="col-span-9 grid grid-cols-3 gap-x-4 gap-y-1">
+                                {PRODUCTS.map((p) => {
+                                    const active = isActivePath(
+                                        pathname,
+                                        `/products/${p.slug}`
+                                    );
+                                    return (
+                                        <li key={p.slug}>
+                                            <Link
+                                                href={`/products/${p.slug}`}
+                                                aria-current={active ? "page" : undefined}
+                                                className={cn(
+                                                    "group flex items-center gap-4 p-2 transition-colors hover:bg-paper",
+                                                    active && "bg-paper"
+                                                )}
+                                            >
+                                                <span className="relative size-16 shrink-0 bg-surface">
+                                                    <Image
+                                                        src={p.image}
+                                                        alt=""
+                                                        fill
+                                                        className="object-contain p-1.5 transition-transform duration-500 group-hover:scale-110"
+                                                    />
+                                                </span>
+                                                <span className="min-w-0">
+                                                    <span className="block text-[0.9375rem] font-medium leading-snug tracking-[-0.01em] text-ink">
+                                                        {p.name}
+                                                    </span>
+                                                    <span className="eyebrow mt-1 block text-muted-ink">
+                                                        {p.category}
+                                                    </span>
+                                                </span>
+                                            </Link>
+                                        </li>
                                     );
                                 })}
-                            </div>
-
-                            {/* Sidebar Trigger - visible at 950px and below */}
-                            <div className="hidden max-[950px]:block">
-                                <Sidebar />
-                            </div>
-                        </nav>
-                    </MaxWidthWrapper>
-                </header>
-            </div>
-        </div>
+                            </ul>
+                        </MaxWidthWrapper>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </header>
     );
 };
 
